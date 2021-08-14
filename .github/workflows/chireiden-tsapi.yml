@@ -1,4 +1,4 @@
-name: Chireiden Nightly
+name: Publish TSAPI
 on: push
 
 jobs:
@@ -27,8 +27,6 @@ jobs:
       - name: Build and Publish
         run: |
           cd ..
-          dir
-          ls
           cd TSAPI
           dotnet build TerrariaServerAPI/TerrariaServerAPI.csproj
           dotnet pack --version-suffix alpha --output nupkgs TerrariaServerAPI/TerrariaServerAPI.csproj
