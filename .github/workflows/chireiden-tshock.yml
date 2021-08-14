@@ -24,12 +24,18 @@ jobs:
         with:
           dotnet-version: '5.0.x'
 
-      - name: Build and Publish
+      - name: Build
         run: |
           cd ..
-          dir
-          ls
           cd TShock
           dotnet build TShockAPI/TShockAPI.csproj
           dotnet pack --version-suffix alpha --output nupkgs TShockAPI/TShockAPI.csproj
+
+      - uses: actions/upload-artifact@v1
+        with:
+          name: NuGetPackages
+          path: nupkgs
+
+      - name: Publish
+        run: |
           dotnet nuget push nupkgs/*.nupkg -k ${{ secrets.ApiKey }} -s https://api.nuget.org/v3/index.json
