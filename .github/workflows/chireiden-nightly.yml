@@ -23,7 +23,7 @@ jobs:
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: '5.0.x'
-      - run: dotnet build TSAPI/TShock.4.OTAPI.sln
+      - run: dotnet build TSAPI/TerrariaServerAPI/TerrariaServerAPI.csproj
       - run: dotnet pack --version-suffix 'nightly' --output TSAPI.nupkg TSAPI/TerrariaServerAPI/TerrariaServerAPI.csproj
       - run: dotnet nuget push TSAPI.nupkg -k ${{ secrets.ApiKey }} -s https://api.nuget.org/v3/index.json
 
