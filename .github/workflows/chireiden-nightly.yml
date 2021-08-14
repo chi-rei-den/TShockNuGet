@@ -23,9 +23,10 @@ jobs:
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: '5.0.x'
+      - run: cd ../TSAPI
       - run: ls
-      - run: dotnet build ./TSAPI/TerrariaServerAPI/TerrariaServerAPI.csproj
-      - run: dotnet pack --version-suffix 'nightly' --output TSAPI.nupkg TSAPI/TerrariaServerAPI/TerrariaServerAPI.csproj
+      - run: dotnet build TerrariaServerAPI/TerrariaServerAPI.csproj
+      - run: dotnet pack --version-suffix 'nightly' --output TSAPI.nupkg TerrariaServerAPI/TerrariaServerAPI.csproj
       - run: dotnet nuget push TSAPI.nupkg -k ${{ secrets.ApiKey }} -s https://api.nuget.org/v3/index.json
 
       - uses: actions/upload-artifact@v1
