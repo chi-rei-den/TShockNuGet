@@ -1,0 +1,33 @@
+name: Chireiden Nightly
+on: push
+
+jobs:
+  publish:
+    name: Build & Publish
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+        with:
+          submodules: recursive
+
+      - name: Checkout TShock
+        uses: actions/checkout@v1
+        with:
+          submodules: recursive
+          path: TSAPI
+          repository: chi-rei-den/TSAPI/
+          ref: dotnet5
+
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '5.0.x'
+      - run: dotnet build TSAPI/TShock.4.OTAPI.sln
+      - run: dotnet pack --version-suffix 'nightly' --output TSAPI.nupkg TSAPI/TerrariaServerAPI/TerrariaServerAPI.csproj
+      - run: dotnet nuget push TSAPI.nupkg -k ${{ secrets.ApiKey }} -s https://api.nuget.org/v3/index.json
+
+      - uses: actions/upload-artifact@v1
+        with:
+          name: TSAPI.nupkg
+          path: TSAPI.nupkg
