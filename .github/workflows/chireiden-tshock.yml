@@ -26,16 +26,16 @@ jobs:
 
       - name: Build
         run: |
-          cd ..
-          cd TShock
+          cd ../TShock
           dotnet build TShockAPI/TShockAPI.csproj
           dotnet pack --version-suffix alpha --output nupkgs TShockAPI/TShockAPI.csproj
 
       - uses: actions/upload-artifact@v1
         with:
           name: NuGetPackages
-          path: nupkgs
+          path: ../TShock/nupkgs
 
       - name: Publish
         run: |
+          cd ../TShock
           dotnet nuget push nupkgs/*.nupkg -k ${{ secrets.ApiKey }} -s https://api.nuget.org/v3/index.json
