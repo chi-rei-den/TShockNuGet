@@ -23,7 +23,7 @@ jobs:
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: '5.0.x'
-      - run: cd ../TSAPI
+      - run: cd ..
       - run: ls
       - run: dotnet build TerrariaServerAPI/TerrariaServerAPI.csproj
       - run: dotnet pack --version-suffix 'nightly' --output TSAPI.nupkg TerrariaServerAPI/TerrariaServerAPI.csproj
