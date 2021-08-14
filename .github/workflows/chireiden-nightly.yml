@@ -33,8 +33,3 @@ jobs:
           dotnet build TerrariaServerAPI/TerrariaServerAPI.csproj
           dotnet pack --version-suffix 'nightly' --output nupkgs TerrariaServerAPI/TerrariaServerAPI.csproj
           dotnet nuget push nupkgs/*.nupkg -k ${{ secrets.ApiKey }} -s https://api.nuget.org/v3/index.json
-
-      - uses: actions/upload-artifact@v1
-        with:
-          name: TSAPI.nupkg
-          path: TSAPI.nupkg
