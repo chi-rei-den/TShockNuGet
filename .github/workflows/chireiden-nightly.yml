@@ -31,5 +31,5 @@ jobs:
           ls
           cd TSAPI
           dotnet build TerrariaServerAPI/TerrariaServerAPI.csproj
-          dotnet pack --version-suffix 'nightly' --output nupkgs TerrariaServerAPI/TerrariaServerAPI.csproj
+          dotnet pack --version-suffix alpha --output nupkgs TerrariaServerAPI/TerrariaServerAPI.csproj
           dotnet nuget push nupkgs/*.nupkg -k ${{ secrets.ApiKey }} -s https://api.nuget.org/v3/index.json
