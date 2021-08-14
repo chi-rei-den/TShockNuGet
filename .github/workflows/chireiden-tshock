@@ -1,0 +1,35 @@
+name: Publish TShock
+on: push
+
+jobs:
+  publish:
+    name: Build & Publish
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+        with:
+          submodules: recursive
+
+      - name: Checkout TShock
+        uses: actions/checkout@v1
+        with:
+          submodules: recursive
+          path: TShock
+          repository: chi-rei-den/TShock/
+          ref: dotnet5
+
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '5.0.x'
+
+      - name: Build and Publish
+        run: |
+          cd ..
+          dir
+          ls
+          cd TShock
+          dotnet build TShockAPI/TShockAPI.csproj
+          dotnet pack --version-suffix alpha --output nupkgs TShockAPI/TShockAPI.csproj
+          dotnet nuget push nupkgs/*.nupkg -k ${{ secrets.ApiKey }} -s https://api.nuget.org/v3/index.json
